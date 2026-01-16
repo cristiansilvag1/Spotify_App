@@ -1,30 +1,76 @@
-.slide-content{
+/* Fuente tipo Spotify */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+/* Variables de color */
+:root {
+  --color-oscuro: #121212;
+  --color-claro: #f5f5f5;
+}
+
+/* Contenido */
+ion-content {
+  color: #ffffff;
+}
+
+/* Header centrado */
+.spotify-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: #ffffff;
   text-align: center;
-  padding: 10px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  letter-spacing: 0.5px;
 }
-.slide-content img{
+
+/* Slide estilo Spotify */
+.slide-content {
+  text-align: center;
+  padding: 16px;
+}
+
+.slide-content img {
   width: 100%;
-  max-width: 300px;
+  max-width: 280px;
   height: auto;
-  margin: 10% 0px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+}
 
-}
-.slide-content h2{
-  margin: 0;
-  font-size: 25px;
-  color: rgb(12, 12, 12);
-}
-.slide-content p {
+.slide-content h2 {
   font-size: 20px;
-  color: #0f840f;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.slide-content p {
+  font-size: 14px;
+  color: #b3b3b3;
   text-align: justify;
+  line-height: 1.4;
 }
 
-.card{
-  padding: var(--espacio-base);
-  background-color: var(--color-claro);
+/* Botón tipo Spotify */
+ion-button {
+  --background: #1db954;
+  --color: #000000;
+  margin: 16px;
+  font-weight: 600;
+  border-radius: 20px;
 }
 
-.bg-card-test{
-  background-color: rgb(94, 115, 94);
+/* Card Spotify */
+ion-card {
+  background: #181818;
+  color: #ffffff;
+  border-radius: 16px;
+  margin: 16px;
+}
+
+ion-card-title {
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
 }

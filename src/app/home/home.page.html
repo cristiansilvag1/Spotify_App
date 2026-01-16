@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Home
+    <ion-title class="spotify-title">
+      Pca music
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -16,25 +16,20 @@
   >
     <swiper-slide *ngFor="let genre of genres">
       <div class="slide-content">
-        <h2>{{ genre.title }}</h2>
         <img [src]="genre.image" [alt]="genre.title">
-        <p>{{ genre.description }}</p>
+        <h2>{{ genre.title }}</h2>
+        <p *ngIf="genre.description">{{ genre.description }}</p>
       </div>
     </swiper-slide>
   </swiper-container>
 
-  <div [style.background-color]="colorActual" style="padding: 10px; text-align: center;">
-    
-  </div>
-
   <ion-button expand="block" (click)="cambiarColor()">
-    cambia de tema
+    Cambiar tema
   </ion-button>
 
-  <ion-card class="bg-card-test">
+  <ion-card>
     <ion-card-header>
-      <ion-card-title>vive la musica</ion-card-title>
-   
+      <ion-card-title>Vive la música</ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
