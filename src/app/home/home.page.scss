@@ -1,76 +1,87 @@
-/* Fuente tipo Spotify */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
 
-/* Variables de color */
-:root {
-  --color-oscuro: #121212;
-  --color-claro: #f5f5f5;
+:host {
+  --espaciado-base: 1rem;
+  --verde-spotify: #1DB954;
+  font-family: 'Inter', sans-serif;
 }
 
-/* Contenido */
-ion-content {
-  color: #ffffff;
-}
-
-/* Header centrado */
+/* Título estilo App */
 .spotify-title {
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: 22px;
-  color: #ffffff;
-  text-align: center;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  letter-spacing: 0.5px;
-}
-
-/* Slide estilo Spotify */
-.slide-content {
-  text-align: center;
-  padding: 16px;
-}
-
-.slide-content img {
-  width: 100%;
-  max-width: 280px;
-  height: auto;
-  margin-bottom: 12px;
-  border-radius: 12px;
-}
-
-.slide-content h2 {
+  font-weight: 800;
   font-size: 20px;
-  font-weight: 600;
   color: #ffffff;
+  text-align: center;
+  letter-spacing: -0.5px;
 }
 
-.slide-content p {
-  font-size: 14px;
-  color: #b3b3b3;
-  text-align: justify;
-  line-height: 1.4;
+/* Contenedor de Slides */
+.genre-swiper {
+  width: 100%;
+  height: 400px;
+  padding-top: var(--espaciado-base);
+  
+  /* Estilo de los puntitos de paginación */
+  --swiper-pagination-color: var(--verde-spotify);
+  --swiper-pagination-bullet-inactive-color: #535353;
 }
 
-/* Botón tipo Spotify */
+.slide-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--espaciado-base);
+
+  img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px; /* Bordes ligeramente redondeados como los albums */
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -1px;
+  }
+
+  p {
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 8px;
+    opacity: 0.7;
+    max-width: 85%;
+  }
+}
+
+/* Botón estilo Spotify */
 ion-button {
-  --background: #1db954;
-  --color: #000000;
-  margin: 16px;
-  font-weight: 600;
-  border-radius: 20px;
-}
-
-/* Card Spotify */
-ion-card {
-  background: #181818;
-  color: #ffffff;
-  border-radius: 16px;
-  margin: 16px;
-}
-
-ion-card-title {
-  color: #ffffff;
-  font-family: 'Inter', sans-serif;
+  --background: var(--verde-spotify);
+  --background-activated: #1ed760;
+  --color: #ffffff;
+  --border-radius: 500px;
+  margin: 20px var(--espaciado-base);
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  height: 50px;
+}
+
+/* Card estilo Spotify Library */
+ion-card {
+  margin: var(--espaciado-base);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  border: none;
+  transition: all 0.3s ease;
+
+  ion-card-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+  }
 }

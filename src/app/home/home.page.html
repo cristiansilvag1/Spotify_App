@@ -1,22 +1,22 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar style="--background: #000000; --border-style: none;">
     <ion-title class="spotify-title">
       Pca music
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [style.--background]="colorActual">
-  
-  <swiper-container 
-    pagination="true" 
-    loop="true" 
+<ion-content [style.--background]="colorActual" [style.color]="colorActual === colorOscuro ? '#FFFFFF' : '#121212'">
+
+  <swiper-container
+    pagination="true"
+    loop="true"
     slides-per-view="1"
-    style="width: 100%; height: 50%;" 
+    class="genre-swiper"
   >
     <swiper-slide *ngFor="let genre of genres">
       <div class="slide-content">
-        <img [src]="genre.image" [alt]="genre.title">
+        <img [src]="genre.image" [alt]="genre.title" />
         <h2>{{ genre.title }}</h2>
         <p *ngIf="genre.description">{{ genre.description }}</p>
       </div>
@@ -27,13 +27,17 @@
     Cambiar tema
   </ion-button>
 
-  <ion-card>
+  <ion-card [style.--background]="colorActual === colorOscuro ? '#282828' : '#F6F6F6'">
     <ion-card-header>
-      <ion-card-title>Vive la música</ion-card-title>
+      <ion-card-title [style.color]="colorActual === colorOscuro ? '#FFFFFF' : '#121212'">
+        Vive la música
+      </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
-      Sonidos que atraviesan siglos. Desde la elegancia de Mozart hasta la intensidad de Beethoven y la profundidad de Bach, esta música es un viaje sin prisas: ideal para concentrarse, leer, estudiar o simplemente respirar.
+    <ion-card-content [style.color]="colorActual === colorOscuro ? '#B3B3B3' : '#535353'">
+      Sonidos que atraviesan siglos. Desde la elegancia de Mozart hasta la
+      intensidad de Beethoven y la profundidad de Bach. Ideal para concentrarse,
+      estudiar o simplemente respirar.
     </ion-card-content>
   </ion-card>
 

@@ -11,33 +11,31 @@ import { CommonModule } from '@angular/common';
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomePage {
-  // Colores de tema
-  colorClaro = 'var(--color-claro)';
-  colorOscuro = 'var(--color-oscuro)'; 
+  // Paleta oficial de Spotify
+  colorClaro = '#FFFFFF';      // Blanco para modo claro
+  colorOscuro = '#121212';     // Negro Spotify
   colorActual = this.colorOscuro;
 
-  // Géneros musicales
   genres = [
     {
       title: "Music Classic",
       image: "https://static.vecteezy.com/system/resources/previews/003/335/968/large_2x/the-violin-on-table-classic-musical-instrument-used-in-the-orchestra-free-photo.jpg",
-      
+      description: "Vibra al ritmo de la música clásica."
     },
     {
       title: "Afrobeats",
-      image: "https://static.vecteezy.com/system/resources/previews/002/236/321/large_2x/electric-guitar-instrument-musical-isolated-icon-free-vector.jpg",
-      description: "Los mejores temas de Afrobeats están aquí, con ritmos que te harán mover el cuerpo y sentir la energía de cada canción."
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfJBwAN8Kiw2yTqSZW3_wOh0OicpxVHTdcVg&s",
+      description: "Los mejores temas de Afrobeats están aquí, con ritmos que te harán mover el cuerpo."
     },
     {
       title: "Rock & Roll",
-      image: "https://static.vecteezy.com/system/resources/previews/002/236/315/large_2x/saxophone-instrument-musical-isolated-icon-free-vector.jpg",
-      description: "Siente la energía de los clásicos del Rock & Roll, con guitarras eléctricas, baterías potentes y letras que marcaron generaciones."
+      image: "https://static.vecteezy.com/system/resources/thumbnails/003/024/270/small_2x/hand-rock-and-roll-composition-illustration-vector.jpg",
+      description: "Siente la energía de los clásicos del Rock & Roll y baterías potentes."
     }
   ];
 
   constructor() {}
 
-  // Cambiar tema claro/oscuro
   cambiarColor() {
     this.colorActual = (this.colorActual === this.colorOscuro) ? this.colorClaro : this.colorOscuro;
   }
