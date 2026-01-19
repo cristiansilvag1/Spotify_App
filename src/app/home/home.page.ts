@@ -1,6 +1,9 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
+import { storage } from '../services/storage';
+import { Route, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
@@ -10,7 +13,8 @@ import { CommonModule } from '@angular/common';
   imports: [IonicModule, CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class HomePage {
+export class HomePage implements OnInit {
+
   // Paleta oficial de Spotify
   colorClaro = '#FFFFFF';      // Blanco para modo claro
   colorOscuro = '#121212';     // Negro Spotify
@@ -34,9 +38,27 @@ export class HomePage {
     }
   ];
 
-  constructor() {}
+  constructor(private storage: storage, private: router: Router) {}
 
-  cambiarColor() {
-    this.colorActual = (this.colorActual === this.colorOscuro) ? this.colorClaro : this.colorOscuro;
+
+  async ngOnInit() {
+    await this.loadStorageData();
+  }
+
+  async cambiarColor(): Promise<void> {
+    this.colorActual =
+      this.colorActual === this.colorOscuro
+        ? this.colorClaro
+        : this.colorOscuro;
+
+    await this.storage.set('theme', this.colorActual);
+    console.log('tema guardado', this.colorActual);
+  }
+  async loadStorageData(){
+    const savedTheme = await this.storage.get('theme');
+    this.colorActual = savedTheme;
+  }
+  irAIntro(){
+    this.router.navigateByUrl('/intro')
   }
 }

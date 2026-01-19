@@ -41,4 +41,19 @@
     </ion-card-content>
   </ion-card>
 
+  <!-- demo de storage-->
+<div>
+ <h3>demo ionic storage </h3>
+    <div [style.background-color]="colorActual">
+      <p>tem actual:{{colorActual === colorOscuro? ' oscuro' : 'claro'}}</p>
+    </div>
+</div>
+<div>
+  <ion-button (click)="cambiarColor()"> cambiar tema y guardar</ion-button>
+</div>
+
+<ion-button expand="block" color ="tertiary" (click)="irAIntro()">
+  ver Intro
+</ion-button>
+
 </ion-content>
