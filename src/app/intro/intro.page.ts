@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { Storage } from '@ionic/storage-angular';
+import { Storage } from '@ionic/storage-angular'; // Asegúrate de que el nombre del servicio coincida con tu provider
 
 @Component({
   selector: 'app-intro',
@@ -17,24 +17,23 @@ export class IntroPage implements OnInit {
   constructor(private router: Router, private storage: Storage) { }
 
   async ngOnInit() {
-    // Inicializa Storage
+    // Es buena práctica inicializar el storage si no usas un servicio intermedio
     await this.storage.create();
-
-    // Verifica si ya vio el intro
-    const introVisto = await this.storage.get('introVisto');
-    if (introVisto) {
-      // Si ya lo vio, redirige directo al Home
-      this.router.navigateByUrl('/home');
-    }
   }
 
   async goBack() {
-    console.log("volver");
+    console.log("Guardando estado y volviendo al home...");
 
-    // Guardar en Storage que ya vio el intro
-    await this.storage.set('introVisto', true);
-
-    // Navegar al Home
-    this.router.navigateByUrl("/home");
+    try {
+      // Guarda en Storage que ya vio el intro
+      await this.storage.set('introVisto', true);
+      
+      // Navegar al Home
+      this.router.navigateByUrl("/home");
+    } catch (error) {
+      console.error("Error al guardar en storage:", error);
+      // Navegamos de todos modos para no bloquear al usuario
+      this.router.navigateByUrl("/home");
+    }
   }
 }

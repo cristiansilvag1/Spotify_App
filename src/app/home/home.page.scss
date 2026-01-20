@@ -6,82 +6,88 @@
   font-family: 'Inter', sans-serif;
 }
 
-/* Título estilo App */
+/* Título Header */
 .spotify-title {
   font-weight: 800;
   font-size: 20px;
   color: #ffffff;
   text-align: center;
-  letter-spacing: -0.5px;
 }
 
-/* Contenedor de Slides */
+/* Swiper: Ajuste de altura y posición de puntos */
 .genre-swiper {
   width: 100%;
-  height: 400px;
+  height: 420px; // Aumentado para dar aire a los puntos abajo
   padding-top: var(--espaciado-base);
   
-  /* Estilo de los puntitos de paginación */
+  /*coloca los pagination en un buen lugar para que no tapen las letras */
+  --swiper-pagination-bottom: 20px; 
   --swiper-pagination-color: var(--verde-spotify);
-  --swiper-pagination-bullet-inactive-color: #535353;
+  --swiper-pagination-bullet-inactive-color: #888888;
 }
 
 .slide-content {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
   padding: var(--espaciado-base);
+  /* Padding inferior para proteger el texto de los puntos */
+  padding-bottom: 45px; 
 
   img {
-    width: 250px;
-    height: 250px;
+    width: 240px;
+    height: 240px;
     object-fit: cover;
-    border-radius: 8px; /* Bordes ligeramente redondeados como los albums */
-    margin-bottom: 20px;
+    border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    margin-bottom: 15px;
   }
 
   h2 {
     font-size: 24px;
     font-weight: 800;
     margin: 0;
-    letter-spacing: -1px;
   }
 
   p {
     font-size: 14px;
-    font-weight: 400;
     margin-top: 8px;
-    opacity: 0.7;
-    max-width: 85%;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.4;
   }
 }
 
-/* Botón estilo Spotify */
-ion-button {
-  --background: var(--verde-spotify);
-  --background-activated: #1ed760;
-  --color: #ffffff;
-  --border-radius: 500px;
-  margin: 20px var(--espaciado-base);
-  font-weight: 700;
+/* Texto de estado (Modo actual) */
+.status-text {
+  text-align: center;
+  font-size: 13px;
+  margin-top: -5px;
+  margin-bottom: 15px;
+  opacity: 0.9;
   text-transform: uppercase;
   letter-spacing: 1px;
-  height: 50px;
 }
 
-/* Card estilo Spotify Library */
+/* Botones con estilo Spotify (Pill-shape) */
+.btn-guardar {
+  --background: var(--verde-spotify);
+  --color: #ffffff;
+  --border-radius: 500px;
+  margin: 15px var(--espaciado-base);
+  font-weight: 700;
+  height: 55px;
+}
+
+.btn-intro {
+  --border-radius: 500px;
+  margin: 10px var(--espaciado-base) 30px var(--espaciado-base);
+  font-weight: 700;
+  height: 55px;
+}
+
+/* Tarjeta informativa */
 ion-card {
   margin: var(--espaciado-base);
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  border: none;
-  transition: all 0.3s ease;
-
-  ion-card-title {
-    font-size: 1.2rem;
-    font-weight: 800;
-  }
+  transition: background 0.3s ease;
 }

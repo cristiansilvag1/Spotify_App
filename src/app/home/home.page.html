@@ -1,59 +1,53 @@
 <ion-header>
   <ion-toolbar style="--background: #000000; --border-style: none;">
-    <ion-title class="spotify-title">
-      Pca music
-    </ion-title>
+    <ion-title class="spotify-title">Pca music</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [style.--background]="colorActual" [style.color]="colorActual === colorOscuro ? '#FFFFFF' : '#121212'">
+<ion-content [style.--background]="colorActual">
 
-  <swiper-container
-    pagination="true"
-    loop="true"
-    slides-per-view="1"
-    class="genre-swiper"
-  >
+  <swiper-container pagination="true" loop="true" slides-per-view="1" class="genre-swiper">
     <swiper-slide *ngFor="let genre of genres">
       <div class="slide-content">
         <img [src]="genre.image" [alt]="genre.title" />
-        <h2>{{ genre.title }}</h2>
-        <p *ngIf="genre.description">{{ genre.description }}</p>
+        
+        <h2 [style.color]="colorActual === colorOscuro ? '#FFFFFF' : '#121212'">
+          {{ genre.title }}
+        </h2>
+        
+        <p *ngIf="genre.description" 
+           [style.color]="colorActual === colorOscuro ? 'rgba(255,255,255,0.7)' : '#444444'">
+          {{ genre.description }}
+        </p>
       </div>
     </swiper-slide>
   </swiper-container>
 
-  <ion-button expand="block" (click)="cambiarColor()">
-    Cambiar tema
-  </ion-button>
+  <div class="button-container">
+    <ion-button expand="block" (click)="cambiarColor()" class="btn-guardar">
+      CAMBIAR TEMA Y GUARDAR
+    </ion-button>
+    
+    <p class="status-text" [style.color]="colorActual === colorOscuro ? '#FFFFFF' : '#121212'">
+      Modo <strong>{{ colorActual === colorOscuro ? 'Oscuro' : 'Claro' }}</strong>
+    </p>
+  </div>
 
-  <ion-card [style.--background]="colorActual === colorOscuro ? '#282828' : '#F6F6F6'">
+  <ion-card [style.--background]="colorActual === colorOscuro ? '#282828' : '#F4F4F4'">
     <ion-card-header>
       <ion-card-title [style.color]="colorActual === colorOscuro ? '#FFFFFF' : '#121212'">
         Vive la música
       </ion-card-title>
     </ion-card-header>
-
-    <ion-card-content [style.color]="colorActual === colorOscuro ? '#B3B3B3' : '#535353'">
-      Sonidos que atraviesan siglos. Desde la elegancia de Mozart hasta la
-      intensidad de Beethoven y la profundidad de Bach. Ideal para concentrarse,
-      estudiar o simplemente respirar.
+    <ion-card-content [style.color]="colorActual === colorOscuro ? '#B3B3B3' : '#555555'">
+      Sonidos que atraviesan siglos. Desde la elegancia de Mozart, la intensidad de Beethoven y la profundidad de bach, ideal para estudiar o simplemente respirar.
     </ion-card-content>
   </ion-card>
 
-  <!-- demo de storage-->
-<div>
- <h3>demo ionic storage </h3>
-    <div [style.background-color]="colorActual">
-      <p>tem actual:{{colorActual === colorOscuro? ' oscuro' : 'claro'}}</p>
-    </div>
-</div>
-<div>
-  <ion-button (click)="cambiarColor()"> cambiar tema y guardar</ion-button>
-</div>
-
-<ion-button expand="block" color ="tertiary" (click)="irAIntro()">
-  ver Intro
-</ion-button>
+  <div class="button-container">
+    <ion-button expand="block" color="tertiary" (click)="irAIntro()" class="btn-intro">
+      VER INTRO
+    </ion-button>
+  </div>
 
 </ion-content>
