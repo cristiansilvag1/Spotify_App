@@ -48,6 +48,7 @@ export class HomePage implements OnInit {
 
   async ngOnInit() {
     await this.loadStorageData();
+    this.simularCargaDatos();
   }
 
   // Cada vez que la página vuelva a estar activa, revisamos el storage
@@ -66,13 +67,13 @@ export class HomePage implements OnInit {
   }
 
   async loadStorageData(){
-    // 1. Cargar el tema
+    // Cargar el tema
     const savedTheme = await this.storage.get('theme');
     if (savedTheme) {
       this.colorActual = savedTheme;
     }
 
-    // 2. Cargar si ya vio la intro (usando la llave que pusimos en intro.page.ts)
+    // Cargar si ya vio la intro (usando la llave que pusimos en intro.page.ts)
     const visto = await this.storage.get('introVisto');
     this.introYaVista = visto === true;
     
@@ -83,5 +84,16 @@ export class HomePage implements OnInit {
 
   irAIntro(){
     this.router.navigateByUrl('/intro');
+  }
+   async simularCargaDatos() {
+      const data = await this.obtenerDatosSimulados();
+      console.log("Datos simulados cargados:", data);
+    }
+ obtenerDatosSimulados() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(["clasic music ", "afrobeats", "rock & roll", "champeta"])
+      }, 2000)
+    })
   }
 }
