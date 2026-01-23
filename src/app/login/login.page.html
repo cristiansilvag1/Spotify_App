@@ -1,0 +1,43 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar style="--background: #000000;">
+    <ion-title style="color: white; text-align: center;">Iniciar Sesión</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="--background: #121212;">
+  <figure class="profile-default-image ion-text-center ion-padding">
+    <img src="/assets/imagenes/user.png" alt="Usuario">
+    <p class="ion-margin-top" style="color: #ffffff;">Ingresa tus datos</p>
+  </figure>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="ion-padding">
+    
+    <ion-item fill="outline" mode="md" class="login-item">
+      <ion-label position="stacked" style="color: #1db954;">Email</ion-label>
+      <ion-input placeholder="Escribe tu email" formControlName="email" type="email"></ion-input>   
+    </ion-item>
+    <div class="error-container">
+      <ng-container *ngFor="let message of validationMessages.email">
+        <div class="error-message" *ngIf="loginForm.get('email')?.hasError(message.type) && loginForm.get('email')?.touched">
+          {{ message.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-item fill="outline" mode="md" class="login-item ion-margin-top">
+      <ion-label position="stacked" style="color: #1db954;">Contraseña</ion-label>
+      <ion-input placeholder="Escribe tu contraseña" formControlName="password" type="password"></ion-input>   
+    </ion-item>
+    <div class="error-container">
+      <ng-container *ngFor="let message of validationMessages.password">
+        <div class="error-message" *ngIf="loginForm.get('password')?.hasError(message.type) && loginForm.get('password')?.touched">
+          {{ message.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-button expand="block" class="btn-spotify ion-margin-top" [disabled]="loginForm.invalid" type="submit">
+      ENTRAR
+    </ion-button>
+  </form>
+</ion-content>

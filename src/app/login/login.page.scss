@@ -1,0 +1,37 @@
+/* Contenedor de imagen */
+.profile-default-image {
+  img {
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+    background-color: #282828; /* Esto ayuda si la imagen es transparente */
+    border: 2px solid #1db954;
+  }
+}
+
+/* Estilo de los errores para que no muevan mucho el diseño */
+.error-container {
+  min-height: 20px;
+  padding-left: 5px;
+  margin-top: 4px;
+}
+
+.error-message {
+  color: #eb445a;
+  font-size: 12px;
+}
+
+.login-item {
+  --background: #282828;
+  --color: white;
+  --border-radius: 8px;
+  --padding-start: 10px;
+}
+
+.btn-spotify {
+  --background: #1db954;
+  --color: black;
+  --border-radius: 500px;
+  font-weight: bold;
+}
