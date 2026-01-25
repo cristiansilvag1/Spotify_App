@@ -1,20 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
+import { IonicModule, NavController } from '@ionic/angular';
+import { Auth } from '../services/auth';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule], 
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule],
 })
 export class LoginPage implements OnInit {
 
-  loginForm: FormGroup;
+  loginForm!: FormGroup;
+  errorMessage: string = '';
 
-  // Estructura de mensajes de validación para HTML
   validationMessages = {
     email: [
       { type: 'required', message: 'El email es obligatorio.' },
@@ -26,24 +33,34 @@ export class LoginPage implements OnInit {
     ]
   };
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: Auth,
+    private navCtrl: NavController
+  ) {}
+
+  ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      email: new FormControl('', Validators.compose([
-        Validators.required, 
-        Validators.email
-      ])),
-      password: new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.minLength(6) // Validador de longitud mínima
-      ]))
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  ngOnInit() {}
-
   onLogin() {
-    if (this.loginForm.valid) {
-      console.log("Login exitoso", this.loginForm.value);
+    if (this.loginForm.invalid) {
+      return;
     }
+
+    const credentials = this.loginForm.value;
+    console.log(credentials);
+
+    this.authService.loginUser(credentials)
+      .then(res => {
+        this.errorMessage = '';
+        this.navCtrl.navigateForward('/home');
+      })
+      .catch(error => {
+        this.errorMessage = error;
+      });
   }
 }
