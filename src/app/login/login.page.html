@@ -39,6 +39,13 @@
     <ion-button expand="block" class="btn-spotify ion-margin-top" [disabled]="loginForm.invalid" type="submit">
       ENTRAR
     </ion-button>
+
+    <ion-button expand="block" fill="clear" (click)="goToRegister()" style="--color: #ffffff; margin-top: 10px;">
+      ¿No tienes cuenta? <strong style="color: #1db954; margin-left: 5px;">Regístrate</strong>
+    </ion-button>
   </form>
-  {{ errorMessage }}
+
+  <div class="ion-text-center ion-padding" *ngIf="errorMessage" style="color: #eb445a;">
+    {{ errorMessage }}
+  </div>
 </ion-content>

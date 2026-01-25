@@ -9,6 +9,8 @@ import {
 } from '@angular/forms';
 import { IonicModule, NavController } from '@ionic/angular';
 import { Auth } from '../services/auth';
+// 1. IMPORTANTE: Importar tu servicio de storage personalizado
+import { storage } from '../services/storage'; 
 
 @Component({
   selector: 'app-login',
@@ -36,7 +38,9 @@ export class LoginPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: Auth,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    // 2. INYECTAR tu servicio de storage
+    private storageService: storage 
   ) {}
 
   ngOnInit() {
@@ -52,15 +56,24 @@ export class LoginPage implements OnInit {
     }
 
     const credentials = this.loginForm.value;
-    console.log(credentials);
+    console.log("Intentando login con:", credentials);
 
     this.authService.loginUser(credentials)
-      .then(res => {
+      .then(async (res) => {
         this.errorMessage = '';
+
+        await this.storageService.set('isLoggedIn', true);
+
+        console.log("Sesión guardada correctamente. Navegando al Home...");
         this.navCtrl.navigateForward('/home');
       })
       .catch(error => {
-        this.errorMessage = error;
+        
+        this.errorMessage = "Credenciales incorrectas. Inténtalo de nuevo.";
+        console.error("Error en login:", error);
       });
   }
+ goToRegister() {
+  this.navCtrl.navigateForward('/register');
+}
 }

@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
-import { AuthGuard } from './guards/auth-guard';
 import { IntroGuard } from './guards/intro-guard';
+import { AuthGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
-    // Primero verifica que haya visto la intro, luego que esté logueado
+    // El orden importa: 1. Vio intro, 2. Está logueado
     canActivate: [IntroGuard, AuthGuard]  
   },
   {
@@ -21,5 +21,9 @@ export const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
+  },
+  {
+    path: 'register',
+    loadComponent: () => import('./register/register.page').then( m => m.RegisterPage)
   },
 ];

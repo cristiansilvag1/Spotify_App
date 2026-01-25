@@ -16,4 +16,14 @@ return new Promise((accept, reject) => {
   }
 })
   } 
+  registerUser(datos: any) {
+  return new Promise((resolve, reject) => {
+    // Simulamos una respuesta exitosa
+    if (datos.email !== 'error@test.com') {
+      resolve('accept');
+    } else {
+      reject('Este email ya está registrado o hubo un error.');
+    }
+  });
+}
 }

@@ -1,0 +1,20 @@
+.login-item {
+  --background: #282828;
+  --color: white;
+  --highlight-color-focused: #1db954;
+  border-radius: 8px;
+}
+
+.error-message {
+  color: #eb445a;
+  font-size: 0.8rem;
+  padding-left: 5px;
+  margin-top: 4px;
+}
+
+.btn-spotify {
+  --background: #1db954;
+  --color: black;
+  font-weight: bold;
+  --border-radius: 25px;
+}
