@@ -1,15 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicModule, NavController } from '@ionic/angular';
 import { Auth } from '../services/auth';
-// 1. IMPORTANTE: Importar tu servicio de storage personalizado
 import { storage } from '../services/storage'; 
 
 @Component({
@@ -20,7 +13,6 @@ import { storage } from '../services/storage';
   imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule],
 })
 export class LoginPage implements OnInit {
-
   loginForm!: FormGroup;
   errorMessage: string = '';
 
@@ -39,7 +31,6 @@ export class LoginPage implements OnInit {
     private formBuilder: FormBuilder,
     private authService: Auth,
     private navCtrl: NavController,
-    // 2. INYECTAR tu servicio de storage
     private storageService: storage 
   ) {}
 
@@ -51,29 +42,25 @@ export class LoginPage implements OnInit {
   }
 
   onLogin() {
-    if (this.loginForm.invalid) {
-      return;
-    }
+    if (this.loginForm.invalid) return;
 
     const credentials = this.loginForm.value;
-    console.log("Intentando login con:", credentials);
 
     this.authService.loginUser(credentials)
       .then(async (res) => {
         this.errorMessage = '';
-
+        // Guardamos el estado de la sesión
         await this.storageService.set('isLoggedIn', true);
-
-        console.log("Sesión guardada correctamente. Navegando al Home...");
-        this.navCtrl.navigateForward('/home');
+        
+        // RUTA CORRECTA: /menu/home
+        this.navCtrl.navigateForward('/menu/home');
       })
       .catch(error => {
-        
-        this.errorMessage = "Credenciales incorrectas. Inténtalo de nuevo.";
-        console.error("Error en login:", error);
+        this.errorMessage = "Credenciales incorrectas.";
       });
   }
- goToRegister() {
-  this.navCtrl.navigateForward('/register');
-}
+
+  goToRegister() {
+    this.navCtrl.navigateForward('/register');
+  }
 }

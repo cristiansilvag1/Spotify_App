@@ -1,0 +1,16 @@
+.menu-item {
+  --background: transparent;
+  --color: #ffffff;
+  --border-radius: 8px;
+  margin: 5px 10px;
+  
+  ion-icon {
+    color: #1db954; // Verde Spotify
+  }
+}
+
+.logout-item {
+  --background: rgba(235, 68, 90, 0.1);
+  --border-radius: 8px;
+  margin: 20px 10px;
+}
