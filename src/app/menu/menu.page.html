@@ -1,25 +1,54 @@
 <ion-split-pane contentId="main-content">
-  <ion-menu contentId="main-content" type="overlay">
-    <ion-header>
+  <ion-menu 
+    contentId="main-content" 
+    type="reveal"
+    (ionWillOpen)="onMenuOpen()" 
+    (ionWillClose)="onMenuClose()">
+    
+    <ion-header class="ion-no-border">
       <ion-toolbar style="--background: #000000;">
-        <ion-title style="color: white;">PCA Music</ion-title>
+        <ion-buttons slot="start">
+          <ion-menu-toggle>
+            <ion-button>
+              <ion-icon slot="icon-only" name="arrow-back-outline" style="color: #1db954; font-size: 26px;"></ion-icon>
+            </ion-button>
+          </ion-menu-toggle>
+        </ion-buttons>
+        <ion-title style="color: white; font-weight: bold;">PCA Music</ion-title>
       </ion-toolbar>
     </ion-header>
+
     <ion-content style="--background: #121212;">
-      <ion-list lines="none">
+      <ion-list lines="none" style="background: transparent; margin-top: 20px;">
+        
         <ion-menu-toggle auto-hide="false">
-          <ion-item routerLink="/menu/home" routerDirection="root">
-            <ion-icon slot="start" name="home-outline" color="success"></ion-icon>
+          <ion-item routerLink="/menu/home" routerDirection="root" style="--background: transparent; --color: white;">
+            <ion-icon slot="start" name="home-outline" style="color: #1db954;"></ion-icon>
             <ion-label>Inicio</ion-label>
           </ion-item>
-          <ion-item (click)="logout()" button>
-            <ion-icon slot="start" name="log-out-outline" color="danger"></ion-icon>
-            <ion-label color="danger">Cerrar Sesión</ion-label>
-          </ion-item>
         </ion-menu-toggle>
+
+        <ion-item style="--background: transparent; --color: white;">
+          <ion-icon slot="start" [name]="isDarkMode ? 'moon' : 'sunny'" style="color: #1db954;"></ion-icon>
+          <ion-label>Modo Oscuro</ion-label>
+          <ion-toggle slot="end" 
+            (ionChange)="toggleTheme()" 
+            [checked]="isDarkMode" 
+            style="--handle-background-checked: #1db954; --track-background-checked: rgba(29, 185, 84, 0.5);">
+          </ion-toggle>
+        </ion-item>
+
+        <ion-item (click)="logout()" button style="--background: transparent; --color: white; margin-top: 20px;">
+          <ion-icon slot="start" name="log-out-outline" style="color: #1db954;"></ion-icon>
+          <ion-label>Cerrar Sesión</ion-label>
+        </ion-item>
+
       </ion-list>
     </ion-content>
   </ion-menu>
 
-  <ion-router-outlet id="main-content"></ion-router-outlet>
+  <ion-router-outlet 
+    id="main-content" 
+    [class.menu-is-active]="isMenuOpen">
+  </ion-router-outlet>
 </ion-split-pane>

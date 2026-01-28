@@ -1,7 +1,7 @@
-
+// Contenedor principal del Swiper
 .intro-swiper {
-  height: 80%;
-  --bullet-background: #ffffff;
+  height: 75%; 
+  --bullet-background: #888888; // Gris en modo claro
   --bullet-background-active: #1db954;
 }
 
@@ -11,24 +11,66 @@
   justify-content: center;
   align-items: center;
   height: 100%;
+  padding-bottom: 40px;
 
   .intro-img {
     width: 250px;
     height: 250px;
     border-radius: 50%;
     object-fit: cover;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    border: 3px solid #1db954;
   }
+
+  h1 {
+    color: #121212; // Negro por defecto (Modo Claro)
+    font-weight: 800;
+  }
+
+  p {
+    color: #666666; // Gris oscuro (Modo Claro)
+  }
+}
+
+// Contenedor del botón
+.button-footer {
+  height: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff; // Blanco por defecto
 }
 
 .btn-spotify {
   --border-radius: 500px;
   --background: #1db954;
-  --color: black;
+  --color: #000000;
   font-weight: 700;
   width: 80%;
+  height: 50px;
+  --box-shadow: 0 4px 15px rgba(29, 185, 84, 0.3);
 }
 
-/* Ejemplo de cómo usar las clases dinámicas */
-.slide-1 { --background: #121212; }
-.slide-2 { --background: #121212; }
+/* --- CONFIGURACIÓN PARA MODO OSCURO (Spotify Original) --- */
+body.dark {
+  .intro-swiper {
+    --bullet-background: #ffffff;
+  }
+
+  .slide-1, .slide-2, .slide-3, .slide-4 {
+    background: #121212; // Fondo oscuro
+  }
+
+  .slide-inner {
+    h1 { color: #ffffff; }
+    p { color: rgba(255, 255, 255, 0.7); }
+    .intro-img { box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
+  }
+
+  .button-footer {
+    background: #121212;
+  }
+}
+
+/* Colores de fondo por defecto (Modo Claro) */
+.slide-1, .slide-2, .slide-3, .slide-4 { background: #ffffff; transition: background 0.3s ease; }

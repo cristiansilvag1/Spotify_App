@@ -14,11 +14,7 @@ import { Router } from '@angular/router';
 })
 export class HomePage implements OnInit {
 
-  colorClaro = '#FFFFFF';
-  colorOscuro = '#121212';
-  colorActual = this.colorOscuro;
-  
-  // Nueva variable para saber si vio la intro
+  // Mantenemos solo lo necesario para el contenido
   introYaVista: boolean = false;
 
   genres = [
@@ -47,53 +43,34 @@ export class HomePage implements OnInit {
   constructor(private storage: storage, private router: Router) {}
 
   async ngOnInit() {
-    await this.loadStorageData();
+    await this.checkIntroStatus();
     this.simularCargaDatos();
   }
 
-  // Cada vez que la página vuelva a estar activa, revisamos el storage
-  // Esto es útil porque al volver de la Intro, ngOnInit no se vuelve a disparar
   async ionViewWillEnter() {
-    await this.loadStorageData();
+    await this.checkIntroStatus();
   }
 
-  async cambiarColor(): Promise<void> {
-    this.colorActual =
-      this.colorActual === this.colorOscuro
-        ? this.colorClaro
-        : this.colorOscuro;
-
-    await this.storage.set('theme', this.colorActual);
-  }
-
-  async loadStorageData(){
-    // Cargar el tema
-    const savedTheme = await this.storage.get('theme');
-    if (savedTheme) {
-      this.colorActual = savedTheme;
-    }
-
-    // Cargar si ya vio la intro (usando la llave que pusimos en intro.page.ts)
-    const visto = await this.storage.get('introVisto');
+  // Solo revisamos si ya vio la intro
+  async checkIntroStatus(){
+    const visto = await this.storage.get('isIntroShowed'); // Usamos la llave que definimos en el Guard
     this.introYaVista = visto === true;
-    
-    if (this.introYaVista) {
-      console.log("El usuario ya visitó la intro anteriormente");
-    }
+  }
+
+  async simularCargaDatos() {
+    const data = await this.obtenerDatosSimulados();
+    console.log("Datos simulados cargados:", data);
+  }
+
+  obtenerDatosSimulados() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(["classic music", "afrobeats", "rock & roll", "champeta"])
+      }, 2000)
+    })
   }
 
   irAIntro(){
     this.router.navigateByUrl('/intro');
-  }
-   async simularCargaDatos() {
-      const data = await this.obtenerDatosSimulados();
-      console.log("Datos simulados cargados:", data);
-    }
- obtenerDatosSimulados() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(["clasic music ", "afrobeats", "rock & roll", "champeta"])
-      }, 2000)
-    })
   }
 }

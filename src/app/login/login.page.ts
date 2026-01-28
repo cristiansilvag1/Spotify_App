@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import { IonicModule, NavController } from '@ionic/angular';
 import { Auth } from '../services/auth';
 import { storage } from '../services/storage'; 
@@ -13,9 +19,11 @@ import { storage } from '../services/storage';
   imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule],
 })
 export class LoginPage implements OnInit {
+
   loginForm!: FormGroup;
   errorMessage: string = '';
 
+  // ESTO ES LO QUE FALTABA PARA EL HTML
   validationMessages = {
     email: [
       { type: 'required', message: 'El email es obligatorio.' },
@@ -42,18 +50,16 @@ export class LoginPage implements OnInit {
   }
 
   onLogin() {
-    if (this.loginForm.invalid) return;
+    if (this.loginForm.invalid) {
+      return;
+    }
 
-    const credentials = this.loginForm.value;
-
-    this.authService.loginUser(credentials)
+    this.authService.loginUser(this.loginForm.value)
       .then(async (res) => {
         this.errorMessage = '';
-        // Guardamos el estado de la sesión
         await this.storageService.set('isLoggedIn', true);
-        
-        // RUTA CORRECTA: /menu/home
-        this.navCtrl.navigateForward('/menu/home');
+        // Flujo: Login -> Intro
+        this.navCtrl.navigateForward('/intro');
       })
       .catch(error => {
         this.errorMessage = "Credenciales incorrectas.";

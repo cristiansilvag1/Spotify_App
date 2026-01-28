@@ -1,8 +1,7 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
-import { Router } from '@angular/router';
-import { Storage } from '@ionic/storage-angular';
+import { IonicModule, NavController } from '@ionic/angular';
+import { storage } from '../services/storage'; 
 
 @Component({
   selector: 'app-intro',
@@ -10,11 +9,11 @@ import { Storage } from '@ionic/storage-angular';
   styleUrls: ['./intro.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA] // Necesario para el swiper
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class IntroPage implements OnInit {
 
-  
+  // TUS 4 SLIDES ORIGINALES RESTAURADOS
   slides = [
     {
       title: 'Tu música, a tu manera',
@@ -42,14 +41,15 @@ export class IntroPage implements OnInit {
     }
   ];
 
-  constructor(private router: Router, private storage: Storage) { }
+  constructor(private navCtrl: NavController, private storageService: storage) { }
 
-  async ngOnInit() {
-    await this.storage.create();
-  }
+  ngOnInit() {}
 
   async goBack() {
-    await this.storage.set('introVisto', true);
-    this.router.navigateByUrl("/home");
+    // Guardamos para que el Guard sepa que ya vimos la intro
+    await this.storageService.set('isIntroShowed', true);
+    
+    // Navegamos a la ruta completa del menú
+    this.navCtrl.navigateRoot('/menu/home');
   }
 }

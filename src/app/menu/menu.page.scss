@@ -1,16 +1,14 @@
-.menu-item {
-  --background: transparent;
-  --color: #ffffff;
-  --border-radius: 8px;
-  margin: 5px 10px;
-  
-  ion-icon {
-    color: #1db954; // Verde Spotify
-  }
+// Buscamos el botón de hamburguesa dentro del contenido desplazado
+.menu-is-active {
+    ion-menu-button {
+        opacity: 0 !important;
+        pointer-events: none !important;
+        transition: opacity 0.2s ease-in-out;
+    }
 }
 
-.logout-item {
-  --background: rgba(235, 68, 90, 0.1);
-  --border-radius: 8px;
-  margin: 20px 10px;
+// Opcional: Oscurecer un poco el Home cuando el menú se abre (efecto elegante)
+#main-content.menu-is-active {
+    filter: brightness(0.5);
+    transition: filter 0.3s ease-in-out;
 }

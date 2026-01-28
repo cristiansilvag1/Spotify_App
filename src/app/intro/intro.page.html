@@ -1,29 +1,29 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar style="--background: #000000;">
-    <ion-title style="color: white; text-align: center;">Bienvenido</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content style="--background: #121212;">
-  <swiper-container pagination="true" class="intro-swiper">
+  
+  <swiper-container 
+    pagination="true" 
+    class="intro-swiper" 
+    loop="true">
+    
     <swiper-slide *ngFor="let slide of slides" [class]="slide.class">
       <div class="slide-inner ion-padding ion-text-center">
-        <img [src]="slide.image" class="intro-img ion-margin-bottom" />
+        <div class="img-container">
+          <img [src]="slide.image" class="intro-img" />
+        </div>
         
-        <h1 class="ion-margin-top" style="color: white; font-weight: 800;">
-          {{ slide.title }}
-        </h1>
-        
-        <p style="color: #b3b3b3;">
-          {{ slide.description }}
-        </p>
+        <div class="text-container">
+          <h1 class="slide-title">{{ slide.title }}</h1>
+          <p class="slide-description">{{ slide.description }}</p>
+        </div>
       </div>
     </swiper-slide>
+
   </swiper-container>
 
-  <div class="button-footer ion-padding ion-text-center">
+  <div class="button-footer">
     <ion-button (click)="goBack()" class="btn-spotify">
-      Empezar a Escuchar
+      EMPEZAR A ESCUCHAR
     </ion-button>
   </div>
+
 </ion-content>
