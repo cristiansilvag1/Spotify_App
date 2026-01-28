@@ -1,93 +1,65 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
-
-:host {
-  --espaciado-base: 1rem;
-  --verde-spotify: #1DB954;
-  font-family: 'Inter', sans-serif;
-}
-
-/* Título Header */
-.spotify-title {
+.home-title {
   font-weight: 800;
-  font-size: 20px;
-  color: #ffffff;
-  text-align: center;
+  margin-top: 25px;
+  font-size: 1.7rem;
+  color: var(--ion-text-color);
 }
 
-/* Swiper: Ajuste de altura y posición de puntos */
-.genre-swiper {
+.home-subtitle {
+  font-weight: 700;
+  color: #1db954;
+  margin-bottom: 15px;
+}
+
+/* Diseño de los Slides */
+.genre-card {
+  position: relative;
   width: 100%;
-  height: 420px; // Aumentado para dar aire a los puntos abajo
-  padding-top: var(--espaciado-base);
-  
-  /*coloca los pagination en un buen lugar para que no tapen las letras */
-  --swiper-pagination-bottom: 20px; 
-  --swiper-pagination-color: var(--verde-spotify);
-  --swiper-pagination-bullet-inactive-color: #888888;
-}
-
-.slide-content {
-  text-align: center;
-  padding: var(--espaciado-base);
-  /* Padding inferior para proteger el texto de los puntos */
-  padding-bottom: 45px; 
+  height: 200px;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
 
   img {
-    width: 240px;
-    height: 240px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    margin-bottom: 15px;
   }
 
-  h2 {
-    font-size: 24px;
-    font-weight: 800;
-    margin: 0;
-  }
+  .genre-overlay {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 20px 15px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    color: white;
 
-  p {
-    font-size: 14px;
-    margin-top: 8px;
-    max-width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.4;
+    h2 { margin: 0; font-size: 1.4rem; font-weight: bold; }
+    p { margin: 5px 0 0; font-size: 0.85rem; opacity: 0.8; }
   }
 }
 
-/* Texto de estado (Modo actual) */
-.status-text {
-  text-align: center;
-  font-size: 13px;
-  margin-top: -5px;
+/* Diseño de la Cuadrícula */
+.song-card {
   margin-bottom: 15px;
-  opacity: 0.9;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  .image-wrapper {
+    position: relative;
+    aspect-ratio: 1/1;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    img { width: 100%; height: 100%; object-fit: cover; }
+    .play-fab {
+      position: absolute; bottom: 8px; right: 8px;
+      --border-radius: 50%; width: 36px; height: 36px;
+      ion-icon { color: black; }
+    }
+  }
+  .song-info {
+    padding: 8px 2px;
+    .song-name { font-weight: 700; color: var(--ion-text-color); font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .song-artist { color: #666; font-size: 0.8rem; }
+  }
 }
 
-/* Botones con estilo Spotify (Pill-shape) */
-.btn-guardar {
-  --background: var(--verde-spotify);
-  --color: #ffffff;
-  --border-radius: 500px;
-  margin: 15px var(--espaciado-base);
-  font-weight: 700;
-  height: 55px;
-}
-
-.btn-intro {
-  --border-radius: 500px;
-  margin: 10px var(--espaciado-base) 30px var(--espaciado-base);
-  font-weight: 700;
-  height: 55px;
-}
-
-/* Tarjeta informativa */
-ion-card {
-  margin: var(--espaciado-base);
-  border-radius: 12px;
-  transition: background 0.3s ease;
-}
+body.dark .song-artist { color: #b3b3b3; }

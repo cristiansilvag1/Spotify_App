@@ -1,52 +1,73 @@
 <ion-header class="ion-no-border">
   <ion-toolbar style="--background: #000000;">
-    
     <ion-buttons slot="start">
       <ion-menu-button style="--color: #1db954;"></ion-menu-button>
     </ion-buttons>
-
-    <ion-title class="spotify-title" style="text-align: center; color: white;">
-      Pca music
+    <ion-title style="text-align: center; color: white; font-weight: bold;">
+      PCA Music
     </ion-title>
-
     <ion-buttons slot="end">
       <ion-button disabled style="width: 48px;"></ion-button>
     </ion-buttons>
-    
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div class="ion-padding-horizontal">
+    <h1 class="home-title">Explorar Música</h1>
+    <h3 class="home-subtitle">Categorías</h3>
+  </div>
 
-  <swiper-container pagination="true" loop="true" slides-per-view="1" class="genre-swiper">
-    <swiper-slide *ngFor="let genre of genres">
-      <div class="slide-content ion-padding">
-        <img [src]="genre.image" [alt]="genre.title" class="genre-image" />
-        
-        <h2 class="genre-title">
-          {{ genre.title }}
-        </h2>
-        
-        <p *ngIf="genre.description" class="genre-description">
-          {{ genre.description }}
-        </p>
-      </div>
-    </swiper-slide>
-  </swiper-container>
+  <div class="slider-container ion-padding-bottom">
+    <swiper-container [slidesPerView]="1.2" [spaceBetween]="15" [centeredSlides]="true" [pagination]="true">
+      <swiper-slide *ngFor="let genre of genres">
+        <div class="genre-card">
+          <img [src]="genre.image" />
+          <div class="genre-overlay">
+            <h2>{{ genre.title }}</h2>
+            <p>{{ genre.description }}</p>
+          </div>
+        </div>
+      </swiper-slide>
+    </swiper-container>
+  </div>
+
+  <div class="ion-padding-horizontal">
+    <h3 class="home-subtitle">Top Canciones</h3>
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let song of songs">
+        <div class="song-card">
+          <div class="image-wrapper">
+            <img [src]="song.image" 
+                 (error)="song.image = 'https://via.placeholder.com/150/282828/FFFFFF?text=Music'" />
+            <ion-button class="play-fab" color="success" size="small">
+              <ion-icon name="play"></ion-icon>
+            </ion-button>
+          </div>
+          <div class="song-info">
+            <h2 class="song-name">{{ song.name }}</h2>
+            <p class="song-artist">{{ song.artist }}</p>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <ion-card class="music-card">
     <ion-card-header>
       <ion-card-title>Vive la música</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      Sonidos que atraviesan siglos. Desde la elegancia de Mozart, la intensidad de Beethoven y la profundidad de Bach, ideal para estudiar o simplemente respirar.
+      Sonidos que atraviesan siglos. Explora nuestra biblioteca en la nube.
     </ion-card-content>
   </ion-card>
 
   <div class="button-container ion-padding">
-    <ion-button expand="block" color="tertiary" (click)="irAIntro()" class="btn-intro">
+    <ion-button expand="block" color="tertiary" (click)="irAIntro()" style="--border-radius: 10px;">
       VER INTRO DE NUEVO
     </ion-button>
   </div>
-
 </ion-content>
