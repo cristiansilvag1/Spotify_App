@@ -1,3 +1,4 @@
+/* Títulos y Subtítulos (Tu diseño original) */
 .home-title {
   font-weight: 800;
   margin-top: 25px;
@@ -11,7 +12,46 @@
   margin-bottom: 15px;
 }
 
-/* Diseño de los Slides */
+/* --- NUEVA SECCIÓN: Artistas Circulares del Servidor --- */
+.artists-slider {
+  margin-bottom: 10px;
+
+  .artist-circle-card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .avatar-wrapper {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 8px;
+      border: 2px solid #1db954;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .artist-name-label {
+      color: var(--ion-text-color);
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin: 0;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+
+/* Diseño de los Slides de Categorías (Tu diseño original) */
 .genre-card {
   position: relative;
   width: 100%;
@@ -39,27 +79,54 @@
   }
 }
 
-/* Diseño de la Cuadrícula */
+/* Diseño de la Cuadrícula de Canciones (Tu diseño original) */
 .song-card {
   margin-bottom: 15px;
+  
   .image-wrapper {
     position: relative;
     aspect-ratio: 1/1;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    
     img { width: 100%; height: 100%; object-fit: cover; }
+    
     .play-fab {
-      position: absolute; bottom: 8px; right: 8px;
-      --border-radius: 50%; width: 36px; height: 36px;
+      position: absolute; 
+      bottom: 8px; 
+      right: 8px;
+      --border-radius: 50%; 
+      width: 36px; 
+      height: 36px;
       ion-icon { color: black; }
     }
   }
+
   .song-info {
     padding: 8px 2px;
-    .song-name { font-weight: 700; color: var(--ion-text-color); font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .song-name { 
+      font-weight: 700; 
+      color: var(--ion-text-color); 
+      font-size: 0.9rem; 
+      overflow: hidden; 
+      text-overflow: ellipsis; 
+      white-space: nowrap; 
+    }
     .song-artist { color: #666; font-size: 0.8rem; }
   }
 }
 
+/* Soporte para modo oscuro */
 body.dark .song-artist { color: #b3b3b3; }
+
+/* Tarjetas y Botones finales */
+.music-card {
+  margin: 20px 0;
+  border-radius: 15px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}

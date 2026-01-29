@@ -5,31 +5,55 @@ import { storage } from './storage';
   providedIn: 'root',
 })
 export class Auth {
+  // Ajusta esta URL a la IP o dominio de tu servidor
+  // Ejemplo: 'http://192.168.1.10:3000'
+  baseUrl = 'https://tu-servidor-api.com'; 
+
   constructor(private storageService: storage) {}
 
   async loginUser(credentials: any) {
-    const user = await this.storageService.get('user_data');
-    
-    return new Promise((resolve, reject) => {
-      if (
-        (user && user.email === credentials.email && user.password === credentials.password) ||
-        (credentials.email === "admin@gmail.com" && credentials.password === "123456789")
-      ) {
-        resolve('login correcto');
+    try {
+      const response = await fetch(`${this.baseUrl}/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(credentials)
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // Guardamos los datos del usuario o token que devuelva el servidor
+        await this.storageService.set('user_data', data.user || data);
+        return Promise.resolve('login correcto');
       } else {
-        reject('error');
+        return Promise.reject('Credenciales incorrectas');
       }
-    });
+    } catch (error) {
+      console.error("Error en login:", error);
+      return Promise.reject('Error de conexión con el servidor');
+    }
   }
 
-  // ESTE ES EL MÉTODO QUE FALTABA:
   async registerUser(userData: any) {
     try {
-      // Guardamos el objeto del usuario en el storage
-      await this.storageService.set('user_data', userData);
-      return Promise.resolve('Usuario registrado con éxito');
+      const response = await fetch(`${this.baseUrl}/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      });
+
+      if (response.ok) {
+        return Promise.resolve('Usuario registrado con éxito');
+      } else {
+        const errorData = await response.json();
+        return Promise.reject(errorData.message || 'Error al registrar');
+      }
     } catch (error) {
-      return Promise.reject('Error al registrar usuario');
+      console.error("Error en registro:", error);
+      return Promise.reject('Error de conexión con el servidor');
     }
   }
 }

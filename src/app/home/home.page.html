@@ -32,6 +32,23 @@
     </swiper-container>
   </div>
 
+  <div class="ion-padding-horizontal" *ngIf="serverArtists.length > 0">
+    <h3 class="home-subtitle">Artistas Recomendados</h3>
+  </div>
+
+  <div class="artists-slider ion-padding-bottom">
+    <swiper-container [slidesPerView]="3.5" [spaceBetween]="10" class="ion-padding-horizontal">
+      <swiper-slide *ngFor="let artist of serverArtists">
+        <div class="artist-circle-card" (click)="ShowSongsByArtists(artist)">
+          <div class="avatar-wrapper">
+            <img [src]="artist.image || 'https://via.placeholder.com/150/282828/FFFFFF?text=Artist'" />
+          </div>
+          <p class="artist-name-label">{{ artist.name }}</p>
+        </div>
+      </swiper-slide>
+    </swiper-container>
+  </div>
+
   <div class="ion-padding-horizontal">
     <h3 class="home-subtitle">Top Canciones</h3>
   </div>

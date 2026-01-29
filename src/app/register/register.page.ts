@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicModule, NavController } from '@ionic/angular';
 import { storage } from '../services/storage';
-import { Auth } from '../services/auth'; // Tu servicio de autenticación
+import { Auth } from '../services/auth'; 
 
 @Component({
   selector: 'app-register',
@@ -16,7 +16,7 @@ export class RegisterPage implements OnInit {
   registerForm!: FormGroup;
   errorMessage: string = '';
 
-  // Mensajes para mostrar al usuario
+  // Mensajes de validación para la interfaz
   validationMessages = {
     nombre: [{ type: 'required', message: 'El nombre es obligatorio.' }],
     apellido: [{ type: 'required', message: 'El apellido es obligatorio.' }],
@@ -45,24 +45,30 @@ export class RegisterPage implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
+
   async onRegister() {
     if (this.registerForm.valid) {
       const datosUsuario = this.registerForm.value;
 
       try {
-        // Llamamos al servicio (que crearemos en el siguiente paso)
-        const res = await this.authService.registerUser(datosUsuario);
+        // Llamada al servicio que conecta con el servidor (/register)
+        await this.authService.registerUser(datosUsuario);
+        
+        // Si el servidor responde con éxito, limpiamos error y volvemos al login
+        this.errorMessage = '';
+        
+        // Guardamos una copia local por respaldo
+        await this.storageService.set('user_data', datosUsuario);
+        
+        // Redirigimos al Login para que el usuario inicie sesión formalmente
+        this.navCtrl.navigateBack('/login'); 
 
-        if (res === 'accept') {
-          // Guardamos los datos en storage para usarlos luego en el Login
-          await this.storageService.set('user_data', datosUsuario);
-          
-          this.errorMessage = '';
-          this.navCtrl.navigateBack('/login'); // Volver al login
-        }
       } catch (error: any) {
-        this.errorMessage = error; // "Error en el registro"
+        // Captura el mensaje de error definido en el AuthService (reject)
+        this.errorMessage = error; 
       }
+    } else {
+      this.errorMessage = 'Por favor, completa el formulario correctamente.';
     }
   }
 

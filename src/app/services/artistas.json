@@ -1,27 +1,46 @@
-{"artists":[{"name":"Artist One",
-"genre":"Rock",
-"albums":[
-    {"title":"Rocking the World",
-    "year":2020
+{
+  "artists": [
+    {
+      "name": "Bad Bunny",
+      "genre": "Reggaeton",
+      "albums": [
+        {
+          "title": "Un Verano Sin Ti",
+          "songs": [
+            {"title": "Moscow Mule"},
+            {"title": "Tití Me Preguntó"},
+            {"title": "Me Porto Bonito"}
+          ]
+        }
+      ]
     },
-    {"title":"Rock Legends",
-    "year":2022
-    }]},
-    {"name":"Artist Two",
-    "genre":"Pop",
-    "albums":[
-        {"title":"Pop Sensation",
-        "year":2019
-        },
-        {"title":"Pop Hits",
-        "year":2021
-        }]},
-        {"name":"Artist Three",
-        "genre":"Jazz",
-        "albums":[
-            {"title":"Smooth Jazz",
-            "year":2018
-            },
-            {"title":"Jazz Vibes",
-            "year":2020
-            }]}]}
+    {
+      "name": "Karol G",
+      "genre": "Urban",
+      "albums": [
+        {
+          "title": "Mañana será Bonito",
+          "songs": [
+            {"title": "Provenza"},
+            {"title": "TQG"},
+            {"title": "Amargura"}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Feid",
+      "genre": "Urban",
+      "albums": [
+        {
+          "title": "MOR, No Le Temas a la Oscuridad",
+          "songs": [
+            {"title": "Bubalu"},
+            {"title": "Luna"},
+            {"title": "Classy 101"}
+          ]
+        }
+      ]
+    }
+  ]
+}

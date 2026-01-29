@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>{{ artistName }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="dark">
+  <ion-list lines="full" *ngIf="songs.length > 0; else noSongs">
+    <ion-item *ngFor="let song of songs" (click)="playSong(song)" style="--background: transparent; --color: white;">
+      <ion-thumbnail slot="start">
+        <img [src]="song.image || 'https://via.placeholder.com/150'" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ song.name }}</h2>
+        <p>{{ artistName }}</p>
+      </ion-label>
+      <ion-icon name="play-circle-outline" slot="end" color="success"></ion-icon>
+    </ion-item>
+  </ion-list>
+
+  <ng-template #noSongs>
+    <div class="ion-padding ion-text-center">
+      <p>No se encontraron canciones para este artista.</p>
+    </div>
+  </ng-template>
+</ion-content>
