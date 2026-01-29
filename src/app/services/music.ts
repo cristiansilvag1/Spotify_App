@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as dataArtists from './artistas.json';
 
 @Injectable({
   providedIn: 'root',
@@ -20,5 +21,8 @@ export class Music {
       image: song.album.cover_medium, // Imágenes de alta calidad
       preview: song.preview // El audio real para escuchar
     }));
+  }
+  getLocalArtists() {
+    return dataArtists;
   }
 }

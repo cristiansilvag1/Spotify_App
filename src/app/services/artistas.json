@@ -1,0 +1,27 @@
+{"artists":[{"name":"Artist One",
+"genre":"Rock",
+"albums":[
+    {"title":"Rocking the World",
+    "year":2020
+    },
+    {"title":"Rock Legends",
+    "year":2022
+    }]},
+    {"name":"Artist Two",
+    "genre":"Pop",
+    "albums":[
+        {"title":"Pop Sensation",
+        "year":2019
+        },
+        {"title":"Pop Hits",
+        "year":2021
+        }]},
+        {"name":"Artist Three",
+        "genre":"Jazz",
+        "albums":[
+            {"title":"Smooth Jazz",
+            "year":2018
+            },
+            {"title":"Jazz Vibes",
+            "year":2020
+            }]}]}

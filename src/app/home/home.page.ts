@@ -19,6 +19,7 @@ export class HomePage implements OnInit {
 
   introYaVista: boolean = false;
   songs: any[] = []; 
+  localArtists: any;
 
   genres = [
     {
@@ -43,6 +44,7 @@ export class HomePage implements OnInit {
   }
 
   async ngOnInit() {
+    this.getlocalArtists();
     await this.checkIntroStatus();
     this.loadTracks(); 
   }
@@ -64,4 +66,8 @@ export class HomePage implements OnInit {
   irAIntro(){
     this.router.navigateByUrl('/intro');
   }
+  getlocalArtists() {
+     this.localArtists = this.musicService.getLocalArtists();
+     console.log(this.localArtists);
+}
 }
