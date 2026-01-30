@@ -5,33 +5,34 @@ import * as dataArtists from './artistas.json';
   providedIn: 'root',
 })
 export class Music {
-  // Configuración de la API
   baseUrl = 'http://localhost:3000'; 
   proxy = 'https://corsproxy.io/?';
 
   constructor() {}
 
+  // Helper para leer el JSON local correctamente
+  getLocalArtists() {
+    return (dataArtists as any).default || dataArtists;
+  }
+
   /**
-   * TAREA: Servicio para obtener los artistas desde el servidor
+   * Obtener artistas: Si falla el server, usa artistas.json
    */
   async getArtists() {
     try {
       const response = await fetch(`${this.baseUrl}/artists`);
-      if (!response.ok) throw new Error('Error al conectar con el servidor');
+      if (!response.ok) throw new Error('Error al conectar');
       return await response.json();
     } catch (error) {
-      console.warn('Servidor offline. Cargando artistas de respaldo...');
-      // Retornamos una lista estática si el servidor no responde
-      return [
-        { id: 1, name: 'Bad Bunny', image: 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?w=200' },
-        { id: 2, name: 'Karol G', image: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=200' },
-        { id: 3, name: 'Feid', image: 'https://images.unsplash.com/photo-1511735111819-9a3f7709049c?w=200' }
-      ];
+      console.warn('Servidor offline. Usando artistas.json local...');
+      const local = this.getLocalArtists();
+      // Retorna la lista de artistas de tu archivo local
+      return local.artists; 
     }
   }
 
   /**
-   * TAREA: Servicio para obtener las canciones de un artista
+   * Obtener canciones por artista: Si falla el server, busca en artistas.json
    */
   async getTracksByArtist(artistId: number | string) {
     try {
@@ -39,13 +40,32 @@ export class Music {
       if (!response.ok) throw new Error();
       return await response.json();
     } catch (error) {
-      console.error('No se pudieron obtener canciones del servidor');
-      return []; // El componente decidirá si usar el JSON local
+      console.warn('Servidor offline. Buscando canciones en JSON local...');
+      
+      const local = this.getLocalArtists();
+      // Buscamos el artista que coincida con el ID
+      const artistMatch = local.artists.find((a: any) => a.id == artistId);
+      
+      if (artistMatch && artistMatch.albums) {
+        let songs: any[] = [];
+        artistMatch.albums.forEach((album: any) => {
+          album.songs.forEach((s: any) => {
+            songs.push({
+              name: s.title,
+              artist: artistMatch.name,
+              image: artistMatch.image,
+              preview: s.preview
+            });
+          });
+        });
+        return songs;
+      }
+      return [];
     }
   }
 
   /**
-   * Extra: Obtener hits globales (Deezer)
+   * Obtener hits globales (Deezer)
    */
   async getTracks() {
     try {
@@ -59,12 +79,8 @@ export class Music {
         album: song.album.title
       }));
     } catch (error) {
+      console.error('Error Deezer:', error);
       return [];
     }
-  }
-
-  // Helper para el JSON local
-  getLocalArtists() {
-    return (dataArtists as any).default || dataArtists;
   }
 }

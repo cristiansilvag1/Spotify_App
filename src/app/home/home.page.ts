@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { Music } from '../services/music';
 import { SongsModalPage } from '../songs-modal/songs-modal.page'; 
 import { addIcons } from 'ionicons';
-import { play, playOutline, heartOutline, playCircleOutline } from 'ionicons/icons';
+import { play, playOutline, heartOutline, playCircleOutline, pauseCircle, playCircle, playSkipBackSharp, playSkipForwardSharp, chevronDownOutline, volumeMedium } from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
@@ -19,8 +19,9 @@ import { play, playOutline, heartOutline, playCircleOutline } from 'ionicons/ico
 export class HomePage implements OnInit {
   introYaVista: boolean = false;
   songs: any[] = []; 
+  currentSong: any = { name: '', artist: '', image: '', preview: '', playing: false };
   serverArtists: any[] = []; 
-
+  
   genres = [
     { title: "Música Clásica", image: "https://static.vecteezy.com/system/resources/previews/003/335/968/large_2x/the-violin-on-table-classic-musical-instrument-used-in-the-orchestra-free-photo.jpg", description: "Vibra al ritmo clásico." },
     { title: "Afrobeats", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfJBwAN8Kiw2yTqSZW3_wOh0OicpxVHTdcVg&s", description: "Ritmos de África." },
@@ -33,7 +34,11 @@ export class HomePage implements OnInit {
     private musicService: Music,
     private modalController: ModalController 
   ) {
-    addIcons({ play, playOutline, heartOutline, playCircleOutline });
+    addIcons({ 
+      play, playOutline, heartOutline, playCircleOutline, 
+      pauseCircle, playCircle, playSkipBackSharp, 
+      playSkipForwardSharp, chevronDownOutline, volumeMedium 
+    });
   }
 
   async ngOnInit() {
@@ -42,7 +47,6 @@ export class HomePage implements OnInit {
     this.loadArtists(); 
   }
 
-  // TAREA 1: Consumir el servicio de artistas
   async loadArtists() {
     this.serverArtists = await this.musicService.getArtists();
   }
@@ -51,24 +55,31 @@ export class HomePage implements OnInit {
     this.songs = await this.musicService.getTracks(); 
   }
 
-  // TAREA 2: Consumir el servicio de canciones por artista
   async ShowSongsByArtists(artist: any) {
-    // Llamada al servicio
-    let tracks = await this.musicService.getTracksByArtist(artist.id);
+    let tracks: any[] = [];
 
-    // Respaldo local si el servicio no trajo datos (JSON local)
+    try {
+      tracks = await this.musicService.getTracksByArtist(artist.id);
+    } catch (error) {
+      console.warn("Error buscando tracks en servidor");
+    }
+
     if (!tracks || tracks.length === 0) {
       const localData = this.musicService.getLocalArtists();
       const match = localData.artists.find(
-        (a: any) => a.name.toLowerCase() === artist.name.toLowerCase()
+        (a: any) => a.id == artist.id
       );
       
       if (match && match.albums) {
-        tracks = []; // Limpiamos para llenar con local
         match.albums.forEach((album: any) => {
           if (album.songs) {
             album.songs.forEach((s: any) => {
-              tracks.push({ name: s.title, artist: match.name, image: artist.image });
+              tracks.push({ 
+                name: s.title, 
+                artist: match.name, 
+                image: artist.image,
+                preview: s.preview
+              });
             });
           }
         });
@@ -77,15 +88,30 @@ export class HomePage implements OnInit {
 
     const modal = await this.modalController.create({
       component: SongsModalPage,
-      componentProps: { artistName: artist.name, songs: tracks }
+      componentProps: { 
+        artistName: artist.name, 
+        songs: tracks 
+      }
     });
+
+    modal.onDidDismiss().then((Res) => {
+      if (Res.data) {
+        this.currentSong = Res.data.selectedSong;
+      }
+    });
+
     return await modal.present();
   }
 
   async checkIntroStatus(){
     const visto = await this.storageService.get('isIntroShowed');
     this.introYaVista = visto === true;
+    if(!this.introYaVista) {
+      this.irAIntro();
+    }
   }
 
-  irAIntro(){ this.router.navigateByUrl('/intro'); }
+  irAIntro(){ 
+    this.router.navigateByUrl('/intro'); 
+  }
 }

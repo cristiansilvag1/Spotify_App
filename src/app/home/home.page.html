@@ -12,7 +12,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="dark">
   <div class="ion-padding-horizontal">
     <h1 class="home-title">Explorar Música</h1>
     <h3 class="home-subtitle">Categorías</h3>
@@ -58,8 +58,7 @@
       <ion-col size="6" *ngFor="let song of songs">
         <div class="song-card">
           <div class="image-wrapper">
-            <img [src]="song.image" 
-                 (error)="song.image = 'https://via.placeholder.com/150/282828/FFFFFF?text=Music'" />
+            <img [src]="song.image" (error)="song.image = 'https://via.placeholder.com/150/282828/FFFFFF?text=Music'" />
             <ion-button class="play-fab" color="success" size="small">
               <ion-icon name="play"></ion-icon>
             </ion-button>
@@ -73,18 +72,26 @@
     </ion-row>
   </ion-grid>
 
-  <ion-card class="music-card">
-    <ion-card-header>
-      <ion-card-title>Vive la música</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      Sonidos que atraviesan siglos. Explora nuestra biblioteca en la nube.
-    </ion-card-content>
-  </ion-card>
-
-  <div class="button-container ion-padding">
-    <ion-button expand="block" color="tertiary" (click)="irAIntro()" style="--border-radius: 10px;">
-      VER INTRO DE NUEVO
-    </ion-button>
+  <div class="ion-padding">
+    <ion-button expand="block" color="tertiary" (click)="irAIntro()">VER INTRO</ion-button>
   </div>
 </ion-content>
+
+<ion-footer *ngIf="currentSong && currentSong.name">
+  <ion-toolbar color="dark">
+    <ion-item lines="none" color="transparent">
+      <ion-thumbnail slot="start">
+        <img [src]="currentSong.image" style="border-radius: 4px;" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2 style="color: white; font-size: 0.9rem; margin: 0;">{{ currentSong.name }}</h2>
+        <p style="color: #1db954; font-size: 0.8rem; margin: 0;">{{ currentSong.artist }}</p>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button color="success" fill="clear">
+          <ion-icon name="play-circle" size="large"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

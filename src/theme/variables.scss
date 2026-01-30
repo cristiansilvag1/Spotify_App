@@ -1,16 +1,36 @@
-// For information on how to create your own theme, please refer to:
-// https://ionicframework.com/docs/theming/
-:root{
+/* =========================
+   TEMA CLARO (default)
+========================= */
+:root {
+  /* Colores base Ionic */
+  --ion-background-color: #ffffff;
+  --ion-text-color: #000000;
+
+  --ion-toolbar-background: #ffffff;
+  --ion-item-background: #ffffff;
+
+  /* Color principal (verde Spotify) */
+  --ion-color-primary: #1db954;
+
+  /* Tus variables personalizadas */
   --color-claro: #9ed4a8;
-  --color-oscuro: #194d20;
   --espaciado-base: 1rem;
   --espaciado-grande: 2rem;
 }
-// --color-fondo-tarjeta: var(--tema-claro-fondo);
-//--color-texto-tarjeta
-//--color-slide-title
-//--espaciado-slide
 
-//--tema-claro-fonfo
-//--tema-claro-texto
-//--tema-claro-titulo
+/* =========================
+   TEMA OSCURO
+========================= */
+body.dark {
+  --ion-background-color: #121212;
+  --ion-text-color: #ffffff;
+
+  --ion-toolbar-background: #000000;
+  --ion-item-background: transparent;
+  --ion-tab-bar-background: #000000;
+
+  --ion-color-primary: #1db954;
+
+  /* Tus variables personalizadas en oscuro */
+  --color-oscuro: #194d20;
+}

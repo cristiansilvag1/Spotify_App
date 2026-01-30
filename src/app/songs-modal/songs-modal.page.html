@@ -1,29 +1,51 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar color="dark">
-    <ion-title>{{ artistName }}</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="dismiss()">Cerrar</ion-button>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="chevron-down-outline" slot="icon-only"></ion-icon>
+      </ion-button>
     </ion-buttons>
+    <ion-title>Reproduciendo</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="dark">
-  <ion-list lines="full" *ngIf="songs.length > 0; else noSongs">
-    <ion-item *ngFor="let song of songs" (click)="playSong(song)" style="--background: transparent; --color: white;">
-      <ion-thumbnail slot="start">
-        <img [src]="song.image || 'https://via.placeholder.com/150'" />
-      </ion-thumbnail>
+<ion-content class="spotify-bg">
+  <div class="player-container ion-padding ion-text-center" *ngIf="currentSong">
+    <div class="album-art">
+      <img [src]="currentSong.image" [class.rotating]="isPlaying" [class.paused]="!isPlaying" />
+    </div>
+
+    <div class="song-info ion-margin-top">
+      <h1 class="song-title">{{ currentSong.name }}</h1>
+      <p class="artist-subtitle">{{ artistName }}</p>
+    </div>
+
+    <div class="progress-container ion-padding-horizontal">
+      <ion-range min="0" [max]="duration" [(ngModel)]="progress" (ionChange)="seek($event)">
+        <ion-label slot="start" class="time">{{ formatTime(progress) }}</ion-label>
+        <ion-label slot="end" class="time">{{ formatTime(duration) }}</ion-label>
+      </ion-range>
+    </div>
+
+    <div class="controls">
+      <ion-button fill="clear" color="light" (click)="previous()"><ion-icon name="play-skip-back-sharp" size="large"></ion-icon></ion-button>
+      <ion-button fill="clear" class="play-btn" (click)="togglePlay()">
+        <ion-icon [name]="isPlaying ? 'pause-circle' : 'play-circle'"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" color="light" (click)="next()"><ion-icon name="play-skip-forward-sharp" size="large"></ion-icon></ion-button>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <ion-list lines="none" class="song-list">
+    <ion-item *ngFor="let song of songs" (click)="playSong(song)" [class.active-song]="currentSong?.name === song.name">
+      <ion-thumbnail slot="start"><img [src]="song.image" /></ion-thumbnail>
       <ion-label>
-        <h2>{{ song.name }}</h2>
+        <h2 style="color: white;">{{ song.name }}</h2>
         <p>{{ artistName }}</p>
       </ion-label>
-      <ion-icon name="play-circle-outline" slot="end" color="success"></ion-icon>
+      <ion-icon *ngIf="currentSong?.name === song.name" name="volume-medium" slot="end" color="success" class="pulse"></ion-icon>
     </ion-item>
   </ion-list>
-
-  <ng-template #noSongs>
-    <div class="ion-padding ion-text-center">
-      <p>No se encontraron canciones para este artista.</p>
-    </div>
-  </ng-template>
 </ion-content>

@@ -1,12 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonicModule, NavController } from '@ionic/angular';
 import { Auth } from '../services/auth';
 import { storage } from '../services/storage'; 
@@ -23,7 +17,6 @@ export class LoginPage implements OnInit {
   loginForm!: FormGroup;
   errorMessage: string = '';
 
-  // ESTO ES LO QUE FALTABA PARA EL HTML
   validationMessages = {
     email: [
       { type: 'required', message: 'El email es obligatorio.' },
@@ -49,21 +42,39 @@ export class LoginPage implements OnInit {
     });
   }
 
-  onLogin() {
+  async onLogin() {
     if (this.loginForm.invalid) {
+      this.errorMessage = 'Por favor, rellena los campos correctamente.';
       return;
     }
 
-    this.authService.loginUser(this.loginForm.value)
-      .then(async (res) => {
+    const credentials = this.loginForm.value;
+
+    try {
+      // 1. Intentamos con el servidor
+      await this.authService.loginUser(credentials);
+      
+      // Si el servidor acepta las credenciales
+      this.errorMessage = '';
+      await this.storageService.set('isLoggedIn', true);
+      this.navCtrl.navigateForward('/intro');
+
+    } catch (error: any) {
+      // 2. PLAN B: Si el servidor falla o da error de conexión
+      console.warn('Validando credenciales con Storage local...');
+      
+      const localUser = await this.storageService.get('user_data');
+
+      // Verificamos si los datos coinciden con lo guardado en el Registro
+      if (localUser && localUser.email === credentials.email && localUser.password === credentials.password) {
         this.errorMessage = '';
         await this.storageService.set('isLoggedIn', true);
-        // Flujo: Login -> Intro
         this.navCtrl.navigateForward('/intro');
-      })
-      .catch(error => {
-        this.errorMessage = "Credenciales incorrectas.";
-      });
+      } else {
+        // Si no hay internet Y los datos están mal
+        this.errorMessage = "Email o contraseña incorrectos.";
+      }
+    }
   }
 
   goToRegister() {

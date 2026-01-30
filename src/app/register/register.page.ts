@@ -16,7 +16,6 @@ export class RegisterPage implements OnInit {
   registerForm!: FormGroup;
   errorMessage: string = '';
 
-  // Mensajes de validación para la interfaz
   validationMessages = {
     nombre: [{ type: 'required', message: 'El nombre es obligatorio.' }],
     apellido: [{ type: 'required', message: 'El apellido es obligatorio.' }],
@@ -51,21 +50,24 @@ export class RegisterPage implements OnInit {
       const datosUsuario = this.registerForm.value;
 
       try {
-        // Llamada al servicio que conecta con el servidor (/register)
+        // 1. Intentamos con el servidor
         await this.authService.registerUser(datosUsuario);
         
-        // Si el servidor responde con éxito, limpiamos error y volvemos al login
-        this.errorMessage = '';
-        
-        // Guardamos una copia local por respaldo
+        // Si el servidor responde, guardamos copia local y vamos al login
         await this.storageService.set('user_data', datosUsuario);
-        
-        // Redirigimos al Login para que el usuario inicie sesión formalmente
+        this.errorMessage = '';
         this.navCtrl.navigateBack('/login'); 
 
       } catch (error: any) {
-        // Captura el mensaje de error definido en el AuthService (reject)
-        this.errorMessage = error; 
+        // 2. PLAN B: Si el servidor falla (error de conexión)
+        console.warn('Servidor no disponible, usando registro local...');
+        
+        // Guardamos los datos en Storage de todos modos
+        await this.storageService.set('user_data', datosUsuario);
+        
+        // Limpiamos error y redirigimos
+        this.errorMessage = '';
+        this.navCtrl.navigateBack('/login'); 
       }
     } else {
       this.errorMessage = 'Por favor, completa el formulario correctamente.';
