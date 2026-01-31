@@ -15,7 +15,7 @@
 <ion-content color="dark">
   <div class="ion-padding-horizontal">
     <h1 class="home-title">Explorar Música</h1>
-    <h3 class="home-subtitle">Categorías</h3>
+    <h3 class="home-subtitle" style="color: #1db954;">Categorías</h3>
   </div>
 
   <div class="slider-container ion-padding-bottom">
@@ -78,18 +78,38 @@
 </ion-content>
 
 <ion-footer *ngIf="currentSong && currentSong.name">
-  <ion-toolbar color="dark">
-    <ion-item lines="none" color="transparent">
+  <ion-toolbar color="dark" class="player-toolbar">
+    <div class="timeline-container">
+      <ion-range 
+        aria-label="Progreso canción"
+        class="song-range" 
+        color="success" 
+        [min]="0" 
+        [max]="100" 
+        [(ngModel)]="songProgress">
+      </ion-range>
+    </div>
+
+    <ion-item lines="none" color="transparent" class="player-item">
       <ion-thumbnail slot="start">
-        <img [src]="currentSong.image" style="border-radius: 4px;" />
+        <img [src]="currentSong.image" />
       </ion-thumbnail>
+      
       <ion-label>
-        <h2 style="color: white; font-size: 0.9rem; margin: 0;">{{ currentSong.name }}</h2>
-        <p style="color: #1db954; font-size: 0.8rem; margin: 0;">{{ currentSong.artist }}</p>
+        <h2 class="song-title">{{ currentSong.name }}</h2>
+        <p class="artist-subtitle">{{ currentSong.artist }}</p>
       </ion-label>
+
       <ion-buttons slot="end">
+        <ion-button (click)="toggleFavorite()" fill="clear" class="btn-fav">
+          <ion-icon 
+            [name]="currentSong.favorite ? 'heart' : 'heart-outline'" 
+            [color]="currentSong.favorite ? 'success' : 'light'">
+          </ion-icon>
+        </ion-button>
+
         <ion-button color="success" fill="clear">
-          <ion-icon name="play-circle" size="large"></ion-icon>
+          <ion-icon [name]="currentSong.playing ? 'pause-circle' : 'play-circle'" size="large"></ion-icon>
         </ion-button>
       </ion-buttons>
     </ion-item>

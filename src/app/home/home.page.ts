@@ -6,7 +6,11 @@ import { Router } from '@angular/router';
 import { Music } from '../services/music';
 import { SongsModalPage } from '../songs-modal/songs-modal.page'; 
 import { addIcons } from 'ionicons';
-import { play, playOutline, heartOutline, playCircleOutline, pauseCircle, playCircle, playSkipBackSharp, playSkipForwardSharp, chevronDownOutline, volumeMedium } from 'ionicons/icons';
+import { 
+  play, playOutline, heart, heartOutline, playCircleOutline, 
+  pauseCircle, playCircle, playSkipBackSharp, 
+  playSkipForwardSharp, chevronDownOutline, volumeMedium 
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +23,11 @@ import { play, playOutline, heartOutline, playCircleOutline, pauseCircle, playCi
 export class HomePage implements OnInit {
   introYaVista: boolean = false;
   songs: any[] = []; 
-  currentSong: any = { name: '', artist: '', image: '', preview: '', playing: false };
+  // Agregamos favorite y variables de progreso
+  currentSong: any = { name: '', artist: '', image: '', preview: '', playing: false, favorite: false };
+  songProgress: number = 0;
+  songDuration: number = 0;
+
   serverArtists: any[] = []; 
   
   genres = [
@@ -35,7 +43,7 @@ export class HomePage implements OnInit {
     private modalController: ModalController 
   ) {
     addIcons({ 
-      play, playOutline, heartOutline, playCircleOutline, 
+      play, playOutline, heart, heartOutline, playCircleOutline, 
       pauseCircle, playCircle, playSkipBackSharp, 
       playSkipForwardSharp, chevronDownOutline, volumeMedium 
     });
@@ -45,6 +53,11 @@ export class HomePage implements OnInit {
     await this.checkIntroStatus();
     this.loadTracks(); 
     this.loadArtists(); 
+  }
+
+  // Lógica para el botón de favorito
+  toggleFavorite() {
+    this.currentSong.favorite = !this.currentSong.favorite;
   }
 
   async loadArtists() {
@@ -57,7 +70,6 @@ export class HomePage implements OnInit {
 
   async ShowSongsByArtists(artist: any) {
     let tracks: any[] = [];
-
     try {
       tracks = await this.musicService.getTracksByArtist(artist.id);
     } catch (error) {
@@ -66,10 +78,7 @@ export class HomePage implements OnInit {
 
     if (!tracks || tracks.length === 0) {
       const localData = this.musicService.getLocalArtists();
-      const match = localData.artists.find(
-        (a: any) => a.id == artist.id
-      );
-      
+      const match = localData.artists.find((a: any) => a.id == artist.id);
       if (match && match.albums) {
         match.albums.forEach((album: any) => {
           if (album.songs) {
@@ -88,18 +97,15 @@ export class HomePage implements OnInit {
 
     const modal = await this.modalController.create({
       component: SongsModalPage,
-      componentProps: { 
-        artistName: artist.name, 
-        songs: tracks 
-      }
+      componentProps: { artistName: artist.name, songs: tracks }
     });
 
     modal.onDidDismiss().then((Res) => {
       if (Res.data) {
         this.currentSong = Res.data.selectedSong;
+        this.currentSong.favorite = false; // Reset favorito al cambiar canción
       }
     });
-
     return await modal.present();
   }
 
